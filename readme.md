@@ -8,3 +8,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 2 (python)
   - MIN-MAX frequency
   - MIN-MAX indexing
+- Day 3 (python)
+  - count trees on specific slope
+  - multiply trees on set of slopes

@@ -11,3 +11,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 3 (python)
   - count trees on specific slope
   - multiply trees on set of slopes
+- Day 4 (python)
+  - count passport valid tags
+  - count passport valid tags and values

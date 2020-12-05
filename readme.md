@@ -14,3 +14,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 4 (python)
   - count passport valid tags
   - count passport valid tags and values
+- Day 5 (python)
+  - parse aircraft seats
+  - find the missing seat

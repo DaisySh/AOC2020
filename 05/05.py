@@ -38,13 +38,15 @@ seats = read_seats('05/input.txt')
 max_row = 0
 max_col = 0
 max_value = 0
+ids_list = []
 for item in seats:
     if len(item.strip()) > 0:
         seat_item = item.strip()
         row = seat_interpretation(seat_item[:-3], [0, 128])
         col = seat_interpretation(seat_item[-3:], [0, 8])
         k = row * 8 + col
-        print(row, col, k)
+        ids_list.append(k)
+        # print(row, col, k)
         if k > max_value:
             max_value = k
             max_col = col
@@ -52,3 +54,9 @@ for item in seats:
 
 info = 'Max ID:{} Seat({},{})'.format(max_value, max_row, max_col)
 print(info)
+
+# Find your seat
+ids_list.sort()
+all_seats_in_range = list(range(ids_list[0], ids_list[-1]+1))
+diff_set = set(all_seats_in_range) - set(ids_list)
+print('My seat:', diff_set)

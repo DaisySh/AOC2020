@@ -17,3 +17,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 5 (python)
   - parse aircraft seats
   - find the missing seat
+- Day 6 (python)
+  - count yes
+  - count shared yes

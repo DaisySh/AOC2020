@@ -20,3 +20,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 6 (python)
   - count yes
   - count shared yes
+- Day 7 (python)
+  - count inner shiny-gold
+  - count outer shiny-gold

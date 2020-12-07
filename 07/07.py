@@ -43,26 +43,61 @@ def base_rule(r_str):
     return (n_item, color_item)
 
 
-in_file = '07/input.txt'
-# in_file = '07/input2.txt'
-my_rules = read_rules(in_file)
-# print(my_rules)
-my_rules_list = {}
-sg_list = set()
-sg_list.add('shiny-gold')
-sg_list_delimiter = 0
-while sg_list_delimiter != len(sg_list):
-    sg_list_delimiter = len(sg_list)
+def inner_shiny(my_rules):
+    my_rules_list = {}
+    sg_list = set()
+    sg_list.add('shiny-gold')
+    sg_list_delimiter = 0
+    while sg_list_delimiter != len(sg_list):
+        sg_list_delimiter = len(sg_list)
+        for r in my_rules:
+            if len(r.strip()) > 0:
+                r_color, r_items = rule_interpreter(r)
+                if len(r_items) > 0:
+                    for i, j in r_items:
+                        if j in sg_list:
+                            sg_list.add(r_color)
+                if r_color not in my_rules_list:
+                    my_rules_list[r_color] = r_items
+
+    # print(my_rules_list)
+    tmp = len(sg_list) - 1
+    print('Color bags can contain SG', tmp)
+
+
+def outer_shiny(my_rules):
+    my_rules_list = {}
     for r in my_rules:
         if len(r.strip()) > 0:
             r_color, r_items = rule_interpreter(r)
-            if len(r_items) > 0:
-                for i, j in r_items:
-                    if j in sg_list:
-                        sg_list.add(r_color)
-            if r_color not in my_rules_list:
-                my_rules_list[r_color] = r_items
+            my_rules_list[r_color] = r_items
+    sg_list = set()
+    sg_list.add('shiny-gold')
+    count_bags = "shiny-gold"
+    while len(sg_list) > 0:
+        # print(count_bags)
+        color_item = sg_list.pop()
+        check_bag = my_rules_list[color_item]
+        if len(check_bag) > 0:
+            tmp_elements = ""
+            for i, j in check_bag:
+                if len(tmp_elements) > 0:
+                    tmp_elements = "{} + {}*({})".format(tmp_elements, i, j)
+                else:
+                    tmp_elements = "{}*({})".format(i, j)
+                sg_list.add(j)
+            count_bags = count_bags.replace(color_item, "1 + " + tmp_elements)
+        else:
+            count_bags = count_bags.replace(color_item, '1')
+    count_bags = count_bags + " - 1"
+    print('SG can contain', eval(count_bags))
 
-# print(my_rules_list)
-tmp = len(sg_list) - 1
-print('Color bags can contain SG', tmp)
+
+in_file = '07/input.txt'
+my_rules = read_rules(in_file)
+
+# D7.1 problem
+inner_shiny(my_rules)
+
+# D7.2 problem
+outer_shiny(my_rules)

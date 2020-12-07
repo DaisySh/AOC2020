@@ -1,4 +1,7 @@
 #! /usr/bin/env python3
+import ast
+
+
 def read_rules(in_file):
     with open(in_file, 'r') as f:
         f1 = f.read()
@@ -90,7 +93,7 @@ def outer_shiny(my_rules):
         else:
             count_bags = count_bags.replace(color_item, '1')
     count_bags = count_bags + " - 1"
-    print('SG can contain', eval(count_bags))
+    print('SG can contain', ast.literal_eval(count_bags))
 
 
 in_file = '07/input.txt'

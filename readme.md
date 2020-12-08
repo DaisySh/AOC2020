@@ -23,3 +23,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 7 (python)
   - count inner shiny-gold
   - count outer shiny-gold
+- Day 8 (python)
+  - count acc
+  - fix jmp-nop instruction

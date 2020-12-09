@@ -26,3 +26,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 8 (python)
   - count acc
   - fix jmp-nop instruction
+- Day 9 (python)
+  - first value out of rule
+  - find min/max sequence

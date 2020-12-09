@@ -9,17 +9,37 @@ def read_data(in_file):
         return elenco
 
 
-def check_validity(preamble, item):
+def check_validity(preamble, item, random_state=True):
     for j in range(len(preamble)):
-        i_target = random.randint(0, len(preamble)-1)
+        if random_state:
+            i_target = random.randint(0, len(preamble)-1)
+        else:
+            i_target = 0
         value_target = preamble[i_target]
         # remove value_target
         preamble.remove(value_target)
         for j in preamble:
             if (j + value_target) == item:
                 # print(j, value_target, item)
-                return True
+                return True, j, value_target
     return False
+
+
+def check_validity_seq(data, item):
+    tmp_data = data.copy()
+    for j in range(len(data)):
+        value_target = tmp_data[0]
+        tmp_data.remove(value_target)
+        local_sum = 0
+        for i in range(len(tmp_data)):
+            local_sum += tmp_data[i]
+            if local_sum == item:
+                min_val = min(tmp_data[:i])
+                max_val = max(tmp_data[:i])
+                return True, min_val, max_val
+            elif local_sum > item:
+                break
+    return False, -1, -1
 
 
 in_file = "09/input.txt"
@@ -42,3 +62,14 @@ for i in range(max_idx, len(data_list)):
         break
 
 print("Not valid item ", item_not_valid)
+valid_list = []
+for item in data_list:
+    if item <= item_not_valid:
+        valid_list.append(item)
+    else:
+        break
+
+ok_flag, min_val, max_val = check_validity_seq(valid_list, item_not_valid)
+if ok_flag:
+    s_tmp = "Min-Max:{}-{} Sum:{}".format(min_val, max_val, min_val+max_val)
+    print(s_tmp)

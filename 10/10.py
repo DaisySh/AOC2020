@@ -37,11 +37,32 @@ def check_jolts(data_list):
                 print("AAAAAAAAAAA - ", data_list[i], data_list[j])
             i = i + 1
     print(count_diffs)
-    return count_diffs[1] * count_diffs[3]
+    return count_diffs, count_diffs[1] * count_diffs[3]
+
+
+def count_all_combinations(data_list):
+    data_list.sort()
+    my_dict = {0: 1}
+    for item in data_list:
+        k_val = [item + 1, item + 2, item + 3]
+        for k in k_val:
+            if k in data_list:
+                if k not in my_dict:
+                    my_dict[k] = my_dict[item]
+                else:
+                    my_dict[k] += my_dict[item]
+
+    # print(my_dict)
+    max_value = max(my_dict.keys())
+    print(my_dict[max_value])
 
 
 in_file = "10/input.txt"
 data_list = clean_data(in_file)
+
 # D10.1
-cj = check_jolts(data_list)
+diffs, cj = check_jolts(data_list)
 print("1s * 3s ", cj)
+
+# D10.2
+count_all_combinations(data_list)

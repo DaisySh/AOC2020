@@ -29,3 +29,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 9 (python)
   - first value out of rule
   - find min/max sequence
+- Day 10 (python)
+  - combo 1/3 jolts
+  - count all combo

@@ -148,7 +148,7 @@ data = clean_data(in_file)
 #cs = ferry_seats(data)
 #print('Occupied seats ', cs)
 
-# D11.2
+# D11.2 + lentoooooo
 opt = {}
 opt['left'] = ['', '-']
 opt['right'] = ['', '+']

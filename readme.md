@@ -35,3 +35,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 11 (python)
   - count Occupied seats all adjacent
   - count Occupied seats first free
+- Day 12 (python)
+  - move ship
+  - move ship based on waypoint

@@ -35,7 +35,7 @@ def check_seat(data, i, j):
     return all_seats
 
 
-def take_seat(data):
+def take_seat(data, max_occ=4):
     tmp_data = data.copy()
     seat_flag = False
     max_row, max_col = data.shape
@@ -49,7 +49,59 @@ def take_seat(data):
                     seat_flag = True
             elif item == '#':
                 occ = local_seats.count('#')
-                if occ >= 4:
+                if occ >= max_occ:
+                    tmp_data[i][j] = 'L'
+                    seat_flag = True
+    return seat_flag, tmp_data
+
+
+def get_first(data, opt_dict, i, j):
+    si, sj = opt_dict
+    if si == '':
+        ki = i
+    else:
+        tmp = "{} {} {}".format(i, si, 1)
+        ki = eval(tmp)
+    if sj == '':
+        kj = j
+    else:
+        tmp = "{} {} {}".format(j, sj, 1)
+        kj = eval(tmp)
+    # print(ki, kj)
+    if ki in list(range(data.shape[0])) and kj in list(range(data.shape[1])):
+        if data[ki, kj] != '.':
+            return data[ki, kj]
+        else:
+            m = get_first(data, opt_dict, ki, kj)
+            return m
+    else:
+        return ''
+
+
+def check_seat_v2(data, i, j, opt_dict):
+    all_seats = []
+    for key in opt_dict:
+        val = get_first(data, opt_dict[key], i, j)
+        if len(val) > 0:
+            all_seats.append(val)
+    return all_seats
+
+
+def take_seat_v2(data, opt, max_occ=5):
+    tmp_data = data.copy()
+    seat_flag = False
+    max_row, max_col = data.shape
+    for i in range(max_row):
+        for j in range(max_col):
+            item = data[i][j]
+            local_seats = check_seat_v2(data, i, j, opt)
+            if item == 'L':
+                if '#' not in local_seats:
+                    tmp_data[i][j] = '#'
+                    seat_flag = True
+            elif item == '#':
+                occ = local_seats.count('#')
+                if occ >= max_occ:
                     tmp_data[i][j] = 'L'
                     seat_flag = True
     return seat_flag, tmp_data
@@ -77,9 +129,34 @@ def ferry_seats(data):
     return d.count('#')
 
 
+def ferry_seats_v2(data, opt):
+    seat_flag = True
+    # print_ferry(data)
+    while seat_flag:
+        # print(seat_flag)
+        seat_flag, data = take_seat_v2(data, opt)
+        # print_ferry(data)
+
+    d = data.flatten().tolist()
+    return d.count('#')
+
+
 in_file = "11/input.txt"
 data = clean_data(in_file)
 
 # D11.1 lentoooooo
-cs = ferry_seats(data)
-print('Occupied seats ', cs)
+#cs = ferry_seats(data)
+#print('Occupied seats ', cs)
+
+# D11.2
+opt = {}
+opt['left'] = ['', '-']
+opt['right'] = ['', '+']
+opt['up'] = ['-', '']
+opt['down'] = ['+', '']
+opt['left-up'] = ['-', '-']
+opt['left-down'] = ['+', '-']
+opt['right-up'] = ['-', '+']
+opt['right-down'] = ['+', '+']
+cs2 = ferry_seats_v2(data, opt)
+print('Occupied seats ', cs2)

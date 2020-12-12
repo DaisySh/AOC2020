@@ -32,3 +32,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 10 (python)
   - combo 1/3 jolts
   - count all combo
+- Day 11 (python)
+  - count Occupied seats all adjacent
+  - count Occupied seats first free

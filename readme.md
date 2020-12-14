@@ -39,7 +39,7 @@ About: `https://adventofcode.com/2020/about`
   - move ship
   - move ship based on waypoint
 - Day 13 (python)
-  - 
+  - first available bus
   -
 - Day 14 (python)
   - mask changes value

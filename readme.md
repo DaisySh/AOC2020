@@ -40,7 +40,7 @@ About: `https://adventofcode.com/2020/about`
   - move ship based on waypoint
 - Day 13 (python)
   - first available bus
-  -
+  - first slot after bus fusion - thanks to @slash3g
 - Day 14 (python)
   - mask changes value
   - mask changes memory id

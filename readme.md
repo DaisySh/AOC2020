@@ -38,3 +38,9 @@ About: `https://adventofcode.com/2020/about`
 - Day 12 (python)
   - move ship
   - move ship based on waypoint
+- Day 13 (python)
+  - 
+  -
+- Day 14 (python)
+  - mask changes value
+  - mask changes memory id

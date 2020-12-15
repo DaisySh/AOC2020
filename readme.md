@@ -44,3 +44,6 @@ About: `https://adventofcode.com/2020/about`
 - Day 14 (python)
   - mask changes value
   - mask changes memory id
+- Day 15 (python)
+  - check memory card at 2020
+  - check memory card at 30000000

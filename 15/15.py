@@ -26,9 +26,9 @@ def play_memory(start_dict, last_item, start_idx, end_game_idx):
         i = i + 1
         if last_card in start_dict:
             if len(start_dict[last_card]) > 1:
-                start_dict[last_card].sort(reverse=True)
+                # start_dict[last_card].sort(reverse=True)
                 val_list = start_dict[last_card]
-                last_card = val_list[0] - val_list[1]
+                last_card = val_list[-1] - val_list[-2]
                 last_idx = i
                 if last_card not in start_dict.keys():
                     start_dict[last_card] = [i]
@@ -59,5 +59,10 @@ for i in range(len(mem_list)):
 last_item = (mem_list[-1], len(mem_list))
 print(mem_dict)
 
-card, idx = play_memory(mem_dict, last_item, len(mem_list), 2020)
+# D15.1
+check_val = 2020
+# D15.2
+check_val = 30000000
+
+card, idx = play_memory(mem_dict, last_item, len(mem_list), check_val)
 print(card, idx)

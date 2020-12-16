@@ -1,4 +1,7 @@
 #! /usr/bin/env python3
+import numpy as np
+
+
 def read_data(in_file):
     with open(in_file, 'r') as f:
         f1 = f.read()
@@ -43,9 +46,9 @@ def get_rules(data):
             rules_dict[item_key] = []
             range1, range2 = item_value.strip().split('or')
             list_r1 = get_range_list(range1)
-            rules_dict[item_key] += list_r1
+            rules_dict[item_key].append(list_r1)
             list_r2 = get_range_list(range2)
-            rules_dict[item_key] += list_r2
+            rules_dict[item_key].append(list_r2)
             all_values += list_r1
             all_values += list_r2
     all_values_set = set(all_values)
@@ -61,18 +64,83 @@ def parse_data(in_file):
 
 
 def check_invalid_tickets_values(tickets, all_vals):
+    new_tickets = []
     invalid = []
+    i = 0
     for item in tickets:
         common_elements = all_vals.intersection(set(item))
-        if len(common_elements) < len(item):
+        if len(common_elements) < len(set(item)):
             diff_elements = set(item).difference(set(common_elements))
             invalid += diff_elements
+        elif len(common_elements) == len(set(item)):
+            new_tickets.append(item)
+        i += 1
 
     final_val = sum(invalid)
-    return invalid, final_val
+    return invalid, final_val, new_tickets
+
+
+def check_rules(col_vals, rules):
+    decision = False
+    count = 0
+    for j in col_vals:
+        if j in rules[0] or j in rules[1]:
+            count += 1
+    if count == len(col_vals):
+        decision = True
+    return decision
+
+
+def remove_item(my_dict, value):
+    for k in my_dict.keys():
+        if len(my_dict[k]) > 1 and value in my_dict[k]:
+            my_dict[k].remove(value)
+    return my_dict
+
+
+def next_key(all_keys, combo_rule_index):
+    for k in combo_rule_index.keys():
+        if len(combo_rule_index[k]) == 1 and combo_rule_index[k][0] in all_keys:
+            return combo_rule_index[k][0]
+
+
+def clean_combo(combo_rule_index, all_keys):
+    first_item = next_key(all_keys, combo_rule_index)
+    while len(all_keys) > 0:
+        remove_item(combo_rule_index, first_item)
+        all_keys.remove(first_item)
+        first_item = next_key(all_keys, combo_rule_index)
+    return combo_rule_index
+
+
+def analysis(tickets, rules):
+    tickets_matrix = np.asarray(tickets)
+    max_rows, max_cols = tickets_matrix.shape
+    rules_list = rules.keys()
+    combo_rule_index = {}
+    for j in range(0, max_cols):
+        col_vals = tickets_matrix[:, j]
+        #print(col_vals)
+        combo_rule_index[j] = []
+        for item in rules_list:
+            local_list = rules[item]
+            if check_rules(col_vals, local_list):
+                combo_rule_index[j].append(item)
+    rl = [k for k in rules_list]
+    print(clean_combo(combo_rule_index, rl))
+    return combo_rule_index
 
 
 in_file = '16/input.txt'
 rules, all_vals, your_ticket, nearby_tickets = parse_data(in_file)
-invalid, final_val = check_invalid_tickets_values(nearby_tickets, all_vals)
+invalid, final_val, new_tickets = check_invalid_tickets_values(nearby_tickets, all_vals)
 print(invalid, final_val)
+
+# D16.2
+new_tickets.append(your_ticket)
+combo_rule_index = analysis(new_tickets, rules)
+final_val = 1
+for k, v in combo_rule_index.items():
+    if v[0].find('departure') >= 0:
+        final_val *= your_ticket[k]
+print(final_val)

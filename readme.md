@@ -49,4 +49,4 @@ About: `https://adventofcode.com/2020/about`
   - check memory card at 30000000
 - Day 16 (python)
   - check invalid values
-  - ticket interpretation 
+  - ticket interpretation (worst code ever)
